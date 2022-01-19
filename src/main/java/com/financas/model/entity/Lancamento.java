@@ -14,15 +14,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Entity
 @Data
 @Table(name = "lancamento", schema = "financas")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Lancamento implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -60,5 +67,11 @@ public class Lancamento implements Serializable {
 	@Enumerated(value = EnumType.STRING)
 	@Column(name = "lan_status")
 	private StatusLancamento status;
+	
+	
+	@PrePersist
+	public void lancarData() {
+		dataCadastro = LocalDate.now();
+	}
 
 }

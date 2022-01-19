@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -43,5 +44,10 @@ public class Usuario implements Serializable {
 	
 	@Column(name = "usu_data_cadastro")
 	private LocalDate dataCadastro;
+	
+	@PrePersist
+	public void lancarData() {
+		dataCadastro = LocalDate.now();
+	}
 
 }
